@@ -2,22 +2,22 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
-contract ContadorVisitas {
+contract ViewsCounter {
 
-    uint public visitas;
-    address implementador;
+    uint public views;
+    address implementer;
 
-    constructor(uint valorInicial) {
-        visitas = valorInicial;
-        implementador = msg.sender;
+    constructor(uint initialValue) {
+        views = initialValue;
+        implementer = msg.sender;
     }
 
-    function incrementarVisitas() soloImplementador public {
-        visitas++;
+    function incrementarVisitas() onlyImplementer public /* accesible from outside the contract */ {
+        views++;
     }
 
-    modifier soloImplementador() {
-        require(msg.sender == implementador, "La cuenta no implemento el contrato.");
+    modifier onlyImplementer() { // Access restriction modifier (like a middleware)
+        require(msg.sender == implementer, "Account didn't implemented the contract"); // If the condition is not met, the function will not be executed
         _;
     }
 
